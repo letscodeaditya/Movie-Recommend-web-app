@@ -60,7 +60,7 @@ const Login = () => {
       setAlertSeverity("success");
       setAlertOpen(true);
       setUserLogged(true);
-      setUserData(data.user);
+      localStorage.setItem("user", JSON.stringify(data.user));
       setOpen(false);
       nav("/home/profile");
     } catch (error) {

@@ -1,7 +1,6 @@
 import * as React from "react";
-import PropTypes from "prop-types";
-import Box from "@mui/system/Box";
 
+import Box from "@mui/system/Box";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
@@ -14,7 +13,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import IconButton from "@mui/material/IconButton";
-
 import { useContext } from "react";
 import { BiCameraMovie } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
@@ -76,8 +74,13 @@ function AppAppBar() {
   const [profileMenuOpen, setProfileMenuOpen] = React.useState(false);
   const [profileMenuAnchor, setProfileMenuAnchor] = React.useState(null);
 
-  const { userLogged, userData, handleSearch } = useContext(MovieStore);
+  const { userLogged, handleSearch, handleLogout } = useContext(MovieStore);
   const nav = useNavigate();
+
+  const isUserLoggedIn = localStorage.getItem("user");
+  //  const isAdminLoggedIn = localStorage.getItem("admin");
+  const user = isUserLoggedIn && JSON.parse(isUserLoggedIn);
+  //  const admin = isAdminLoggedIn && JSON.parse(isAdminLoggedIn);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -90,12 +93,6 @@ function AppAppBar() {
 
   const handleProfileMenuClose = () => {
     setProfileMenuOpen(false);
-  };
-
-  const handleLogout = () => {
-    // Handle logout logic here
-    // Example: Clear user session, redirect, etc.
-    handleProfileMenuClose();
   };
 
   return (
@@ -198,13 +195,13 @@ function AppAppBar() {
               </Search>
             </form>
 
-            {userLogged ? (
+            {isUserLoggedIn ? (
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <IconButton onClick={toggleProfileMenu} size="small">
-                  {userData && userData.Pic ? (
-                    <Avatar alt="User Avatar" src={userData.Pic} />
+                  {user && user.Pic ? (
+                    <Avatar alt="User Avatar" src={user.Pic} />
                   ) : (
-                    <Avatar>{userData && userData.name.charAt(0)}</Avatar>
+                    <Avatar>{user && user.name.charAt(0)}</Avatar>
                   )}
                 </IconButton>
                 <Menu

@@ -1,5 +1,6 @@
 import { createContext, useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const MovieStore = createContext({
   movieList: [],
@@ -16,6 +17,7 @@ export const MovieStore = createContext({
   userLogged: false,
   setUserLogged: () => {},
   setUserData: () => {},
+  handleLogout: () => {},
 });
 
 const MovieStoreProvider = ({ children }) => {
@@ -105,6 +107,7 @@ const MovieStoreProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
+        setUserLogged(true);
         return { isAuthenticated: true, user: data.user }; // Return user data if needed
       } else {
         return { isAuthenticated: false };
@@ -112,6 +115,23 @@ const MovieStoreProvider = ({ children }) => {
     } catch (error) {
       console.error("Error checking authentication:", error);
       return { isAuthenticated: false };
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const axiosInstance = axios.create({
+        withCredentials: true,
+        credentials: "include",
+      });
+
+      await axiosInstance.post(`${process.env.API_BASE_URL}/auth/user/logout`);
+
+      localStorage.removeItem("user");
+
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
     }
   };
 
@@ -132,6 +152,7 @@ const MovieStoreProvider = ({ children }) => {
         userLogged,
         setUserLogged,
         setUserData,
+        handleLogout,
       }}
     >
       {children}
