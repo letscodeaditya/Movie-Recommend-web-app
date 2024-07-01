@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { MovieStore } from "../store/Movie-store";
+import SideNav from "../features/user/SideNav";
 
 const Protected = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -21,7 +22,17 @@ const Protected = () => {
     return <div>Loading...</div>;
   }
 
-  return <>{isAuthenticated ? <Outlet /> : <Navigate to="/login" />}</>;
+  return (
+    <>
+      {isAuthenticated ? (
+        <>
+          <SideNav /> <Outlet />
+        </>
+      ) : (
+        <Navigate to="/login" />
+      )}
+    </>
+  );
 };
 
 export default Protected;

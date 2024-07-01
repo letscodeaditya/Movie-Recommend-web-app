@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../Model/userModel");
-// const generateToken = require("../config/generateToken");
+const generateToken = require("../config/generateToken");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -52,15 +52,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (user) {
     res.status(201).json({
-      _id: user._id,
-      username: user.username,
-      name: user.name,
-      email: user.email,
-      pic: user.pic,
-      country: user.country,
-      theme: user.theme,
-      privacy: user.privacy,
-      token: generateToken(user._id),
+      message: "account created successfully",
     });
   } else {
     res.status(400);
@@ -137,11 +129,13 @@ const loginUser = asyncHandler(async (req, res) => {
     res.json({
       accessToken,
       user: {
-        id: user._id,
+        userId: user._id,
         username: user.username,
         email: user.email,
         name: user.name,
         pic: user.pic,
+        country: user.country,
+        privacy: user.privacy,
       },
     });
   } else {
@@ -192,4 +186,91 @@ const logout = (req, res) => {
   res.json({ message: "Cookie cleared" });
 };
 
-module.exports = { registerUser, checkUserName, loginUser, refresh, logout };
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const {
+    name,
+    username,
+    oldPassword,
+    newPassword,
+    country,
+    privacy,
+    userId,
+    email,
+    pic,
+  } = req.body;
+
+  // Check if the new username is already taken by another user
+  const existingUser = await User.findOne({ username });
+  if (existingUser && existingUser.email !== email) {
+    res.status(400);
+    throw new Error("Username is already taken.");
+  }
+
+  // Find the user by ID
+  const user = await User.findOne({ email });
+  if (!user) {
+    console.error("User not found");
+    res.status(401);
+    throw new Error("Invalid email");
+  }
+
+  // Compare password
+  const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
+
+  if (isPasswordMatch) {
+    user.name = name || user.name;
+    user.username = username || user.username;
+    user.country = country || user.country;
+    user.privacy = privacy || user.privacy;
+    user.pic = pic || user.pic;
+
+    if (newPassword) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(newPassword, salt);
+    }
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      username: updatedUser.username,
+      name: updatedUser.name,
+      email: email,
+      pic: updatedUser.pic,
+      country: updatedUser.country,
+      privacy: updatedUser.privacy,
+    });
+  } else {
+    console.error("Invalid password");
+    res.status(401);
+    throw new Error("password");
+  }
+});
+
+const deleteUser = asyncHandler(async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+    const user = await User.findByIdAndDelete(userId);
+
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+    }
+
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+module.exports = {
+  registerUser,
+  checkUserName,
+  loginUser,
+  refresh,
+  logout,
+  updateUserProfile,
+  deleteUser,
+};

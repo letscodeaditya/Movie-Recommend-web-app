@@ -78,8 +78,8 @@ function AppAppBar() {
   const nav = useNavigate();
 
   const isUserLoggedIn = localStorage.getItem("user");
-  //  const isAdminLoggedIn = localStorage.getItem("admin");
   const user = isUserLoggedIn && JSON.parse(isUserLoggedIn);
+  //  const isAdminLoggedIn = localStorage.getItem("admin");
   //  const admin = isAdminLoggedIn && JSON.parse(isAdminLoggedIn);
 
   const toggleDrawer = (newOpen) => () => {
@@ -198,8 +198,8 @@ function AppAppBar() {
             {isUserLoggedIn ? (
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <IconButton onClick={toggleProfileMenu} size="small">
-                  {user && user.Pic ? (
-                    <Avatar alt="User Avatar" src={user.Pic} />
+                  {user && user.pic ? (
+                    <Avatar alt="User Avatar" src={user.pic} />
                   ) : (
                     <Avatar>{user && user.name.charAt(0)}</Avatar>
                   )}
@@ -210,8 +210,12 @@ function AppAppBar() {
                   onClose={handleProfileMenuClose}
                   onClick={handleProfileMenuClose}
                 >
-                  <MenuItem onClick={() => nav("/profile")}>Profile</MenuItem>
-                  <MenuItem onClick={() => nav("/wishlist")}>Wishlist</MenuItem>
+                  <MenuItem onClick={() => nav("/home/profile")}>
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={() => nav("/home/wishlist")}>
+                    Wishlist
+                  </MenuItem>
                   <Divider />
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>

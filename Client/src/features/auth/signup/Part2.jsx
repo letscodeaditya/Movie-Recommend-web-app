@@ -78,11 +78,13 @@ export default function Part2() {
   };
 
   const checkUsernameAvailability = (username) => {
-    fetch(
-      `${
-        process.env.API_BASE_URL
-      }/auth/user/check-username?username=${encodeURIComponent(username)}`
-    )
+    fetch(`${process.env.API_BASE_URL}/auth/user/check-username`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Network response was not ok");

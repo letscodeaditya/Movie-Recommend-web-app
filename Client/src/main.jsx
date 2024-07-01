@@ -17,6 +17,7 @@ import AboutUs from "./components/AboutUs";
 import Protected from "./route/Protected";
 import Profile from "./features/user/Profile";
 import SignUp from "./features/auth/signup/SignUp";
+import { Wishlist } from "./features/user/Wishlist";
 
 const router = createBrowserRouter([
   {
@@ -55,7 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/home",
         element: <Protected />,
-        children: [{ path: "/home/profile", element: <Profile /> }],
+        children: [
+          { path: "/home/profile", element: <Profile /> },
+          { path: "/home/wishlist", element: <Wishlist /> },
+        ],
       },
     ],
   },
