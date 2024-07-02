@@ -46,10 +46,30 @@ const removeWishlist = async (req, res) => {
 
 const getUserWishlist = async (req, res) => {
   const { userId } = req.params;
+  const { page = 1, limit = 8 } = req.query; // default to page 1 and limit 10
+  const skip = (page - 1) * limit;
 
   try {
-    const wishlist = await Wishlist.find({ userId });
-    res.status(200).json(wishlist);
+    const wishlistedItems = await Wishlist.find({ userId })
+      .skip(skip)
+      .limit(Number(limit))
+      .populate("tmdbId")
+      .populate("type");
+
+    const total = await Wishlist.countDocuments({ userId });
+
+    if (wishlistedItems.length === 0) {
+      return res.status(404).json({
+        message: "No wishlist items found.",
+      });
+    }
+
+    res.status(200).json({
+      data: wishlistedItems,
+      total,
+      page: Number(page),
+      pages: Math.ceil(total / limit),
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -94,6 +114,7 @@ module.exports = {
   removeLike,
   addWishlist,
   removeWishlist,
+  getUserLikes,
   getUserWishlist,
   getUserInteractions,
 };

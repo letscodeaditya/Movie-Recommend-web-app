@@ -7,6 +7,7 @@ const {
   removeWishlist,
   getUserInteractions,
   getUserWishlist,
+  getUserLikes,
 } = require("../Controller/userInteractionController");
 const verifyJWT = require("../Middleware/verifyJWT");
 
@@ -19,6 +20,6 @@ router.get(
   verifyJWT,
   getUserInteractions
 );
-router.get("/:userId", verifyJWT, getUserWishlist);
+router.get("/:userId/wishlist", verifyJWT, getUserWishlist);
 
 module.exports = router;

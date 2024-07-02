@@ -7,8 +7,6 @@ import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { IoMdStar } from "react-icons/io";
-import { BsBookmarkCheckFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { IoMdHeartDislike } from "react-icons/io";
 import Button from "@mui/material/Button";
@@ -22,10 +20,9 @@ import IconButton from "@mui/material/IconButton";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
-import FileCopyIcon from "@mui/icons-material/FileCopyOutlined";
-import SaveIcon from "@mui/icons-material/Save";
-import PrintIcon from "@mui/icons-material/Print";
-import ShareIcon from "@mui/icons-material/Share";
+import ShareModal from "../features/core/ShareModal";
+import Rating from "@mui/material/Rating";
+import { MdDateRange } from "react-icons/md";
 
 const Img = styled("img")({
   margin: "auto",
@@ -45,6 +42,8 @@ const MovieDetail = () => {
   const [wishlisted, setWishlisted] = useState(false);
   const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+  const currentUrl = window.location.href;
 
   let detailUrl;
   let videoUrl;
@@ -89,6 +88,7 @@ const MovieDetail = () => {
   const apiDataMovie = async () => {
     const response = await fetch(`${detailUrl}${id}?language=en-US`, options);
     const data = await response.json();
+    console.log(data);
     setMovie(data);
   };
 
@@ -101,7 +101,7 @@ const MovieDetail = () => {
   const apiDataMovieCredits = async () => {
     const response = await fetch(creditUrl, options);
     const data = await response.json();
-    setMovieCast(data.cast.slice(0, 4));
+    setMovieCast(data.cast.slice(0, 5));
   };
 
   const checkUserInteraction = async () => {
@@ -178,7 +178,13 @@ const MovieDetail = () => {
     setWishlisted(!wishlisted);
   };
 
-  const handleShare = () => {};
+  const handleShare = () => {
+    setShareModalOpen(true);
+  };
+
+  const handleCloseShareModal = () => {
+    setShareModalOpen(false);
+  };
 
   const actions = [
     {
@@ -247,11 +253,24 @@ const MovieDetail = () => {
                         {!tv ? movie.title : movie.original_name}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{ p: 2 }}>
                       <Stack direction="row">
-                        <IoMdStar fontSize="1.5rem" />
-                        <Typography gutterBottom variant="h5" component="div">
-                          {Math.round(movie.vote_average)}
+                        <Rating
+                          name="disabled"
+                          value={Math.round(movie.vote_average / 2)}
+                          disabled
+                          size="large"
+                        />
+                      </Stack>
+                    </Grid>
+                    <Grid item xs={12} sx={{ p: 2 }}>
+                      <Stack direction="row" alignItems="center">
+                        <MdDateRange
+                          fontSize="1.5rem"
+                          style={{ marginRight: "8px" }}
+                        />
+                        <Typography variant="h6" component="div">
+                          {tv ? movie.first_air_date : movie.release_date}
                         </Typography>
                       </Stack>
                     </Grid>
@@ -368,6 +387,11 @@ const MovieDetail = () => {
               />
             ))}
           </SpeedDial>
+          <ShareModal
+            open={shareModalOpen}
+            handleClose={handleCloseShareModal}
+            url={currentUrl}
+          />
         </>
       )}
     </>

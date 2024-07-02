@@ -11,12 +11,12 @@ const SideNav = () => {
   return (
     <Box
       sx={{
-        position: "fixed",
+        position: "absolute",
         left: 0,
         top: "50%",
         transform: "translateY(-50%)",
         width: "200px",
-        height: "40vh",
+
         bgcolor: "background.paper",
         display: "flex",
         flexDirection: "column",
@@ -51,7 +51,7 @@ const SideNav = () => {
         fullWidth
         onClick={() => navigate("/liked")}
       >
-        Liked
+        feedBack
       </Button>
     </Box>
   );
