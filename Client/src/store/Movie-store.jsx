@@ -113,15 +113,22 @@ const MovieStoreProvider = ({ children }) => {
 
   const checkAuthenticated = async () => {
     try {
+      const token = JSON.parse(localStorage.getItem("jwt"));
+
+      if (!token) {
+        return { isAuthenticated: false };
+      }
+
       const response = await fetch(`${apiUrl}/api/user/check`, {
-        method: "GET",
-        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.ok) {
         const data = await response.json();
         setUserLogged(true);
-        return { isAuthenticated: true, user: data.user }; // Return user data if needed
+        return { isAuthenticated: true, user: data.user };
       } else {
         return { isAuthenticated: false };
       }
@@ -141,6 +148,7 @@ const MovieStoreProvider = ({ children }) => {
       await axiosInstance.post(`${apiUrl}/api/user/logout`);
 
       localStorage.removeItem("user");
+      localStorage.removeItem("jwt");
 
       navigate("/");
     } catch (error) {

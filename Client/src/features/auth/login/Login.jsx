@@ -48,7 +48,6 @@ const Login = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-          credentials: "include",
         }
       );
 
@@ -62,6 +61,7 @@ const Login = () => {
       setAlertOpen(true);
       setUserLogged(true);
       localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("jwt", JSON.stringify(data.jwt));
       setOpen(false);
       nav("/home/profile");
     } catch (error) {

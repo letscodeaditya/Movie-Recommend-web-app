@@ -104,15 +104,13 @@ const loginUser = asyncHandler(async (req, res) => {
   if (isPasswordMatch) {
     console.log("Password match, generating token...");
 
-    const accessToken = jwt.sign(
-      {
-        UserInfo: {
-          username: user.username,
-        },
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30m" }
-    );
+    // const accessToken = jwt.sign(
+    //   {
+    //     username: user.username,
+    //   },
+    //   process.env.ACCESS_TOKEN_SECRET,
+    //   { expiresIn: "30m" }
+    // );
 
     const refreshToken = jwt.sign(
       { username: user.username },
@@ -121,14 +119,14 @@ const loginUser = asyncHandler(async (req, res) => {
     );
 
     res.cookie("jwt", refreshToken, {
-      httpOnly: true, //accessible only by web server
-      secure: true, //https
-      sameSite: "None", //cross-site cookie
-      maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.json({
-      accessToken,
+      jwt: refreshToken,
       user: {
         userId: user._id,
         username: user.username,

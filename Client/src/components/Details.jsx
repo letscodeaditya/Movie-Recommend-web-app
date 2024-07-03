@@ -44,6 +44,7 @@ const MovieDetail = () => {
   const [wishlisted, setWishlisted] = useState(false);
   const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
+  const token = JSON.parse(localStorage.getItem("jwt"));
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [loginPromptOpen, setLoginPromptOpen] = useState(false);
   const currentUrl = window.location.href;
@@ -119,6 +120,9 @@ const MovieDetail = () => {
         }`,
         {
           credentials: "include",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -148,6 +152,7 @@ const MovieDetail = () => {
         method,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
         body: JSON.stringify({
@@ -179,6 +184,7 @@ const MovieDetail = () => {
       method,
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       credentials: "include",
       body: JSON.stringify({

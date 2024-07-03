@@ -17,6 +17,7 @@ const WishList = ({ userId }) => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const user = JSON.parse(localStorage.getItem("user"));
+  const token = JSON.parse(localStorage.getItem("jwt"));
   const nav = useNavigate();
 
   const options = {
@@ -66,6 +67,7 @@ const WishList = ({ userId }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
       }

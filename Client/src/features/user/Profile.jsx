@@ -57,6 +57,7 @@ const ProfilePage = () => {
   const navigate = useNavigate();
 
   const isUserLoggedIn = localStorage.getItem("user");
+  const token = JSON.parse(localStorage.getItem("jwt"));
   const user = isUserLoggedIn && JSON.parse(isUserLoggedIn);
 
   const handleChange = (e) => {
@@ -155,6 +156,7 @@ const ProfilePage = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ userId: user.userId }),
           credentials: "include",
@@ -191,6 +193,7 @@ const ProfilePage = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             ...formData,
@@ -350,7 +353,7 @@ const ProfilePage = () => {
           </Stack>
           <Box
             sx={{
-              mt: 5,
+              mt: 10,
               display: "flex",
               justifyContent: "space-between",
               flexDirection: { xs: "column", sm: "row" },

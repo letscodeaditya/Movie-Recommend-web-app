@@ -278,7 +278,9 @@ function AppAppBar() {
                         color="primary"
                         variant="contained"
                         component="a"
-                        href="/signup"
+                        onClick={() => {
+                          nav("/signup");
+                        }}
                         target="_blank"
                         sx={{ width: "100%" }}
                       >
