@@ -70,8 +70,6 @@ const MovieStoreProvider = ({ children }) => {
       });
   };
 
-  console.log(apiKey);
-  console.log(apiUrl);
   useEffect(() => {
     fetchData("/movie/popular?language=en-US&page=1", setMovieList);
     fetchData("/tv/popular?language=en-US&page=1", setTvList);
