@@ -15,7 +15,7 @@ const SearchPage = () => {
   const apiKey = "YOUR_API_KEY"; // Replace with your API key
   const options = {
     headers: {
-      Authorization: `Bearer ${apiKey}`,
+      Authorization: `${process.env.API_KEY}`,
       "Content-Type": "application/json",
     },
   };
