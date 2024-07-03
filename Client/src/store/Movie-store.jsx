@@ -25,7 +25,7 @@ const MovieStoreProvider = ({ children }) => {
   const [tvList, setTvList] = useState([]);
   const [carList, setCarList] = useState([]);
   const [peopleList, setPeopleList] = useState([]);
-  const [searchList, setSearchList] = useState([]);
+
   const [dataFetched, setDataFetched] = useState(true);
   const [userLogged, setUserLogged] = useState(false);
   const [userData, setUserData] = useState({});
@@ -40,6 +40,10 @@ const MovieStoreProvider = ({ children }) => {
     Pic: null,
     privacy: false,
     theme: "",
+  });
+  const [searchList, setSearchList] = useState({
+    movies: [],
+    tvSeries: [],
   });
 
   const options = {
@@ -79,13 +83,24 @@ const MovieStoreProvider = ({ children }) => {
   const handleSearch = (event) => {
     if (event.key === "Enter") {
       setDataFetched(true);
-      navigate("/search");
 
-      fetch(url + `/search/movie?query=${event.target.value}`, options)
-        .then((res) => res.json())
+      const movieUrl = `${url}/search/movie?query=${event.target.value}`;
+      const tvUrl = `${url}/search/tv?query=${event.target.value}`;
+
+      const movieRequest = fetch(movieUrl, options);
+      const tvRequest = fetch(tvUrl, options);
+
+      Promise.all([movieRequest, tvRequest])
+        .then((responses) => Promise.all(responses.map((res) => res.json())))
         .then((data) => {
-          setSearchList(data.results);
+          const [movieData, tvData] = data;
+          setSearchList({
+            movies: movieData.results,
+            tvSeries: tvData.results,
+          });
+          console.log(searchList);
           setDataFetched(false);
+          navigate("/search");
         })
         .catch((error) => {
           console.error("Error searching:", error);

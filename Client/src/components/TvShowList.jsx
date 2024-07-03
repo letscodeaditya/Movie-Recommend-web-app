@@ -14,7 +14,7 @@ const TvShowList = () => {
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // Add smooth behavior for smooth scrolling
+      behavior: "smooth",
     });
     fetchTvShows(currentPage);
   }, [currentPage]);
@@ -64,7 +64,7 @@ const TvShowList = () => {
       <div className="d-flex justify-content-center w-100 mt-3">
         <Stack spacing={2}>
           <Pagination
-            count={10}
+            count={10} // Replace with the actual number of pages
             variant="outlined"
             color="primary"
             page={currentPage}
@@ -73,6 +73,15 @@ const TvShowList = () => {
               "& .MuiPaginationItem-outlined": {
                 color: "white",
                 borderColor: "white",
+              },
+              "& .Mui-selected": {
+                backgroundColor: "white",
+                color: "black",
+                borderColor: "white",
+              },
+              "& .MuiPaginationItem-page:hover": {
+                backgroundColor: "white",
+                color: "black",
               },
             }}
           />

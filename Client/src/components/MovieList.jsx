@@ -1,6 +1,5 @@
 import { useContext, useState, useEffect } from "react";
 import MovieBox from "./MovieBox";
-
 import LoadingSpinner from "./LoadingSpinner";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
@@ -8,20 +7,20 @@ import Stack from "@mui/material/Stack";
 const MovieList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageMovies, setCurrentPageMovies] = useState([]);
-  const [dataFetched, setDataFetched] = useState(false); // Initialize dataFetched to false
+  const [dataFetched, setDataFetched] = useState(false);
 
   const itemsPerPage = 20;
 
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // Add smooth behavior for smooth scrolling
+      behavior: "smooth",
     });
     fetchMovies(currentPage);
   }, [currentPage]);
 
   const fetchMovies = async (pageNumber) => {
-    setDataFetched(true); // Set dataFetched to true when fetching begins
+    setDataFetched(true);
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${pageNumber}`,
       {
@@ -35,7 +34,7 @@ const MovieList = () => {
     );
     const data = await response.json();
     setCurrentPageMovies(data.results);
-    setDataFetched(false); // Set dataFetched to false after data is fetched
+    setDataFetched(false);
   };
 
   const handleChange = (event, value) => {
@@ -63,10 +62,11 @@ const MovieList = () => {
               />
             ))}
       </div>
+
       <div className="d-flex justify-content-center w-100 mt-3">
         <Stack spacing={2}>
           <Pagination
-            count={10}
+            count={10} // Replace with the actual number of pages
             variant="outlined"
             color="primary"
             page={currentPage}
@@ -75,6 +75,15 @@ const MovieList = () => {
               "& .MuiPaginationItem-outlined": {
                 color: "white",
                 borderColor: "white",
+              },
+              "& .Mui-selected": {
+                backgroundColor: "white",
+                color: "black",
+                borderColor: "white",
+              },
+              "& .MuiPaginationItem-page:hover": {
+                backgroundColor: "white",
+                color: "black",
               },
             }}
           />

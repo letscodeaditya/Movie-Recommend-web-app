@@ -26,8 +26,7 @@ const SideNav = () => {
         ml: 2,
         overflow: "hidden",
         "@media (max-width: 900px)": {
-          // Example of using CSS media query directly
-          display: "none", // Hide SideNav on screens smaller than 800px width
+          display: "none",
         },
       }}
     >

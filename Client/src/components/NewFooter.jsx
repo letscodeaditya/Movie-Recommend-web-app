@@ -1,13 +1,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
-import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-
 import FacebookIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/X";
@@ -21,7 +16,6 @@ export default function NewFooter() {
   return (
     <Box
       sx={{
-        Width: "100vw",
         bgcolor: "red",
         color: "white",
         display: "flex",
@@ -30,6 +24,9 @@ export default function NewFooter() {
         gap: { xs: 4, sm: 8 },
         py: { xs: 5, sm: 1 },
         textAlign: { sm: "center", md: "left" },
+        bottom: 0, // Align the footer to the bottom
+        left: 0, // Ensure the footer starts from the left edge
+        zIndex: 1000, // Adjust zIndex as needed to ensure visibility over other content
       }}
     >
       <Box
@@ -43,10 +40,16 @@ export default function NewFooter() {
         }}
       >
         <div>
-          <Typography display="inline" sx={{ mr: "10px", color: "black" }}>
-            Privacy Policy
-          </Typography>
-          <Typography display="inline">About us</Typography>
+          <Button display="inline" sx={{ mr: "10px", color: "black" }} href="/">
+            Home
+          </Button>
+          <Button
+            display="inline"
+            sx={{ mr: "10px", color: "black" }}
+            href="/about"
+          >
+            About us
+          </Button>
         </div>
         <Stack
           direction="row"
@@ -59,23 +62,16 @@ export default function NewFooter() {
         >
           <IconButton
             color="inherit"
-            href="https://github.com/mui"
+            href="https://github.com/letscodeaditya"
             aria-label="GitHub"
             sx={{ alignSelf: "center" }}
           >
             <FacebookIcon />
           </IconButton>
+
           <IconButton
             color="inherit"
-            href="https://twitter.com/MaterialUI"
-            aria-label="X"
-            sx={{ alignSelf: "center" }}
-          >
-            <TwitterIcon />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            href="https://www.linkedin.com/company/mui/"
+            href="https://www.linkedin.com/in/aditya-ayush-a76a81271"
             aria-label="LinkedIn"
             sx={{ alignSelf: "center" }}
           >
