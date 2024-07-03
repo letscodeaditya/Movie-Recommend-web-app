@@ -12,7 +12,7 @@ export const SignUpPage = () => {
             <Box
               sx={{
                 height: "100%",
-                backgroundImage: 'url("/public/image/bat1.png")',
+                backgroundImage: 'url("/image/bat1.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 borderRadius: "16px",
