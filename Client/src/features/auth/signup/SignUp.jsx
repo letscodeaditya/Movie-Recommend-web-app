@@ -90,7 +90,7 @@ const SignUp = () => {
   return (
     <>
       <Box sx={{ height: "50px" }}></Box>
-      <Container component="main" maxWidth="sm" sx={{ mb: 5, height: "90vh" }}>
+      <Container component="main" maxWidth="sm" sx={{ mb: 5 }}>
         <Paper
           variant="outlined"
           sx={{

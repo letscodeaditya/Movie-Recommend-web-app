@@ -177,7 +177,7 @@ const ProfilePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.password) {
+    if (!formData.oldPassword) {
       setError("Please enter your old password");
       setOpen(true);
       return;
@@ -223,10 +223,10 @@ const ProfilePage = () => {
       <Box sx={{ mt: 14 }}></Box>
       <Box
         sx={{
-          ml: "250px",
+          ml: { xs: 0, sm: 3, md: "250px" },
           p: 3,
           backgroundColor: "white",
-          mr: 5,
+          mr: { xs: 0, sm: 3, md: 5 },
           mb: 5,
           borderRadius: 5,
           minHeight: "85vh",
@@ -255,22 +255,20 @@ const ProfilePage = () => {
         </Box>
         <form onSubmit={handleSubmit}>
           <Stack
-            direction="row"
-            sx={{ mt: 2, display: "flex", justifyContent: "center" }}
+            direction={{ xs: "column", sm: "row" }}
+            sx={{ mt: 2, justifyContent: "center" }}
             spacing={2}
           >
             <TextField
               label="Email"
-              sx={{ width: "50%" }}
+              sx={{ width: { xs: "100%", sm: "50%" } }}
               defaultValue={user.email}
               margin="normal"
               disabled
             />
-          </Stack>
-          <Stack direction="row" sx={{ mt: 2 }} spacing={2}>
             <TextField
               fullWidth
-              label="change Name"
+              label="Change Name"
               name="name"
               defaultValue={user.name}
               onChange={handleChange}
@@ -279,7 +277,7 @@ const ProfilePage = () => {
             <TextField
               id="username"
               fullWidth
-              label="change Username"
+              label="Change Username"
               helperText={
                 usernameAvailable === true
                   ? "Username is available"
@@ -335,7 +333,7 @@ const ProfilePage = () => {
           <Stack direction="row" sx={{ mt: 5 }} spacing={2}>
             <TextField
               fullWidth
-              label="old Password"
+              label="Old Password"
               name="oldPassword"
               type="password"
               onChange={handleChange}
@@ -343,7 +341,7 @@ const ProfilePage = () => {
             />
             <TextField
               fullWidth
-              label="new password (enter here if u want to change your old password)"
+              label="New Password (Enter here if you want to change your old password)"
               name="newPassword"
               type="password"
               onChange={handleChange}
@@ -352,16 +350,17 @@ const ProfilePage = () => {
           </Stack>
           <Box
             sx={{
-              mt: 10,
+              mt: 5,
               display: "flex",
               justifyContent: "space-between",
+              flexDirection: { xs: "column", sm: "row" },
             }}
           >
             <Button
               type="submit"
               variant="contained"
               color="success"
-              sx={{ mr: 1 }}
+              sx={{ mb: { xs: 2, sm: 0 }, width: { xs: "100%", sm: "auto" } }}
               startIcon={<EditOutlinedIcon />}
               disabled={loading || uploadingPic}
             >
@@ -373,6 +372,7 @@ const ProfilePage = () => {
               startIcon={<MdDelete />}
               onClick={handleDelete}
               disabled={loading}
+              sx={{ width: { xs: "100%", sm: "auto" } }}
             >
               {loading ? <CircularProgress size={24} /> : "Delete Account"}
             </Button>

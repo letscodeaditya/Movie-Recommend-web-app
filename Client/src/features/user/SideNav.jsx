@@ -25,11 +25,15 @@ const SideNav = () => {
         borderRadius: 5,
         ml: 2,
         overflow: "hidden",
+        "@media (max-width: 900px)": {
+          // Example of using CSS media query directly
+          display: "none", // Hide SideNav on screens smaller than 800px width
+        },
       }}
     >
-      <Avatar src={user.pic} sx={{ width: "30%", height: "30%", mb: 2 }} />
+      <Avatar src={user?.pic} sx={{ width: "30%", height: "30%", mb: 2 }} />
       <Typography sx={{ fontSize: "3vh" }} variant="h6" gutterBottom>
-        {user.name}
+        {user?.name}
       </Typography>
       <Button
         sx={{ fontSize: "2vh" }}
@@ -44,13 +48,6 @@ const SideNav = () => {
         onClick={() => navigate("/home/wishlist")}
       >
         Wishlist
-      </Button>
-      <Button
-        sx={{ fontSize: "2vh", mb: 2 }}
-        fullWidth
-        onClick={() => navigate("/liked")}
-      >
-        feedBack
       </Button>
     </Box>
   );
