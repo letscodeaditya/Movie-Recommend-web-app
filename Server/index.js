@@ -20,8 +20,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/auth/user", userRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/userint", userInterest);
 
 const port = process.env.PORT;
-app.listen(port, console.log(`server running on port ${port}`));
+app.listen(port);

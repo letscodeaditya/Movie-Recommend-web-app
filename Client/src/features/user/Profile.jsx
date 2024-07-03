@@ -68,7 +68,7 @@ const ProfilePage = () => {
   };
 
   const checkUsernameAvailability = (username) => {
-    fetch(`${process.env.API_BASE_URL}/auth/user/check-username`, {
+    fetch(`${process.env.API_BASE_URL}/api/user/check-username`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -150,7 +150,7 @@ const ProfilePage = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.API_BASE_URL}/auth/user/delete`,
+        `${process.env.API_BASE_URL}/api/user/delete`,
         {
           method: "DELETE",
           headers: {
@@ -186,7 +186,7 @@ const ProfilePage = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.API_BASE_URL}/auth/user/profile`,
+        `${process.env.API_BASE_URL}/api/user/profile`,
         {
           method: "PUT",
           headers: {

@@ -112,7 +112,7 @@ const MovieStoreProvider = ({ children }) => {
   const checkAuthenticated = async () => {
     try {
       const response = await fetch(
-        `${process.env.API_BASE_URL}/auth/user/check`,
+        `${process.env.API_BASE_URL}/api/user/check`,
         {
           method: "GET",
           credentials: "include",
@@ -139,7 +139,7 @@ const MovieStoreProvider = ({ children }) => {
         credentials: "include",
       });
 
-      await axiosInstance.post(`${process.env.API_BASE_URL}/auth/user/logout`);
+      await axiosInstance.post(`${process.env.API_BASE_URL}/api/user/logout`);
 
       localStorage.removeItem("user");
 

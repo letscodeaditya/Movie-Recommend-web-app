@@ -78,7 +78,7 @@ export default function Part2() {
   };
 
   const checkUsernameAvailability = (username) => {
-    fetch(`${process.env.API_BASE_URL}/auth/user/check-username`, {
+    fetch(`${process.env.API_BASE_URL}/api/user/check-username`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

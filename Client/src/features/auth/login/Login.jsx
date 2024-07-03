@@ -41,7 +41,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `${process.env.API_BASE_URL}/auth/user/login`,
+        `${process.env.API_BASE_URL}/api/user/login`,
         {
           method: "POST",
           headers: {
