@@ -22,6 +22,7 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  borderRadius: "16px",
 };
 
 const Login = () => {
@@ -107,8 +108,18 @@ const Login = () => {
             </Button>
           </form>
           <hr />
-          <Button variant="outlined" startIcon={<FcGoogle />}>
-            Login with Google
+          <Typography variant="h8" gutterBottom>
+            don't have a account?
+          </Typography>
+          <Button
+            type="submit"
+            color="error"
+            onClick={() => {
+              nav("/signup");
+              handleClose();
+            }}
+          >
+            create account!!
           </Button>
         </Box>
       </Modal>

@@ -161,13 +161,6 @@ export default function Part1() {
             </Select>
           </FormControl>
         </Grid>
-
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="done" value="yes" />}
-            label="By clicking, you agree to the terms of use."
-          />
-        </Grid>
       </Grid>
     </FormControl>
   );

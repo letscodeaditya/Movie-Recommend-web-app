@@ -16,8 +16,9 @@ import TvShowList from "./components/TvShowList";
 import AboutUs from "./components/AboutUs";
 import Protected from "./route/Protected";
 import Profile from "./features/user/Profile";
-import SignUp from "./features/auth/signup/SignUp";
 import WishList from "./features/user/Wishlist";
+import { SignUpPage } from "./pages/SignUpPage";
+import { HomePage } from "./pages/HomePage";
 
 const router = createBrowserRouter([
   {
@@ -26,20 +27,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <>
-            <Carou />
-            {/* <Carousel /> */}
-            <Divider />
-            <TrendingMovies />
-            <Divider />
-            <TrendingShows />
-            <Divider />
-            <PeopleList />
-            <Divider />
-            <Hero />
-          </>
-        ),
+        element: <HomePage />,
       },
       {
         path: "/moviedetail/:id",
@@ -52,7 +40,7 @@ const router = createBrowserRouter([
       { path: "/about", element: <AboutUs /> },
       { path: "/search", element: <SearchPage /> },
       { path: "/login", element: <Login /> },
-      { path: "/signup", element: <SignUp /> },
+      { path: "/signup", element: <SignUpPage /> },
       {
         path: "/home",
         element: <Protected />,

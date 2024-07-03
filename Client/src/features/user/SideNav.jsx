@@ -13,10 +13,9 @@ const SideNav = () => {
       sx={{
         position: "absolute",
         left: 0,
-        top: "50%",
+        top: "60%",
         transform: "translateY(-50%)",
         width: "200px",
-
         bgcolor: "background.paper",
         display: "flex",
         flexDirection: "column",
@@ -47,7 +46,7 @@ const SideNav = () => {
         Wishlist
       </Button>
       <Button
-        sx={{ fontSize: "2vh" }}
+        sx={{ fontSize: "2vh", mb: 2 }}
         fullWidth
         onClick={() => navigate("/liked")}
       >

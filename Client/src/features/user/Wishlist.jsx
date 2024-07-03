@@ -9,6 +9,7 @@ import {
   Grid,
   Skeleton,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const WishList = ({ userId }) => {
   const [wishlist, setWishlist] = useState([]);
@@ -16,6 +17,7 @@ const WishList = ({ userId }) => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const user = JSON.parse(localStorage.getItem("user"));
+  const nav = useNavigate();
 
   const options = {
     method: "GET",
@@ -89,7 +91,7 @@ const WishList = ({ userId }) => {
           mr: 5,
           mb: 5,
           borderRadius: 5,
-          minHeight: "50vh",
+          minHeight: "80vh",
         }}
       >
         <Typography variant="h4" gutterBottom>
@@ -110,7 +112,14 @@ const WishList = ({ userId }) => {
             <Grid container spacing={2}>
               {wishlist.map((item) => (
                 <Grid item xs={12} sm={6} md={3} key={item.id}>
-                  <Card sx={{ height: "100%" }}>
+                  <Card
+                    sx={{ height: "100%", cursor: "pointer" }}
+                    onClick={() => {
+                      item.type === "movie"
+                        ? nav(`/moviedetail/${item.id}`)
+                        : nav(`/seriesdetail/${item.id}`);
+                    }}
+                  >
                     <CardMedia
                       component="img"
                       height="200"
@@ -131,7 +140,7 @@ const WishList = ({ userId }) => {
             </Grid>
             <Box
               sx={{
-                mt: 5,
+                mt: 10,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",

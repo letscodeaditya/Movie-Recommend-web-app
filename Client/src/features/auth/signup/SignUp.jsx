@@ -32,7 +32,7 @@ function getStepContent(step) {
 
 const SignUp = () => {
   const [activeStep, setActiveStep] = React.useState(0);
-  const { formData } = React.useContext(MovieStore);
+  const { formData, setFormData } = React.useContext(MovieStore);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
@@ -45,6 +45,12 @@ const SignUp = () => {
   };
 
   const handleCreateAccount = () => {
+    if (formData.password !== formData.confirmPassword) {
+      setShowAlert(true);
+      setAlertMessage("Passwords do not match.");
+      return;
+    }
+
     fetch(`${process.env.API_BASE_URL}/auth/user/reg`, {
       method: "POST",
       headers: {
@@ -54,22 +60,25 @@ const SignUp = () => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Network response was not ok");
+          return res.json().then((error) => {
+            throw new Error(error.message || "Network response was not ok");
+          });
         }
         return res.json();
       })
       .then((data) => {
-        // Handle success
-        setActiveStep(activeStep + 1); // Move to the next step on successful registration
+        setActiveStep(activeStep + 1);
         setShowAlert(true);
         setAlertMessage("Account created successfully!");
+        setFormData(null);
       })
       .catch((error) => {
         console.log(formData);
         console.error("Error creating account:", error);
-        // Handle error
         setShowAlert(true);
-        setAlertMessage("Failed to create account. Please try again.");
+        setAlertMessage(
+          error.message || "Failed to create account. Please try again."
+        );
       });
   };
 
@@ -81,14 +90,14 @@ const SignUp = () => {
   return (
     <>
       <Box sx={{ height: "50px" }}></Box>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      <Container component="main" maxWidth="sm" sx={{ mb: 5, height: "90vh" }}>
         <Paper
           variant="outlined"
           sx={{
             my: { xs: 3, md: 6 },
             p: { xs: 2, md: 3 },
             borderRadius: "50px",
-            bgcolor: "grey",
+            bgcolor: "white",
           }}
         >
           <Typography component="h1" variant="h4" align="center">

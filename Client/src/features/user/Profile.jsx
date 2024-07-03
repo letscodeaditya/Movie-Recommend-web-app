@@ -156,7 +156,7 @@ const ProfilePage = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userId: user._id }),
+          body: JSON.stringify({ userId: user.userId }),
           credentials: "include",
         }
       );
@@ -194,7 +194,7 @@ const ProfilePage = () => {
           },
           body: JSON.stringify({
             ...formData,
-            userId: user._id,
+            userId: user.userId,
             email: user.email,
           }),
           credentials: "include",
@@ -229,6 +229,7 @@ const ProfilePage = () => {
           mr: 5,
           mb: 5,
           borderRadius: 5,
+          minHeight: "85vh",
         }}
       >
         <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
@@ -294,14 +295,19 @@ const ProfilePage = () => {
             />
           </Stack>
           <Stack direction="row" sx={{ mt: 2 }} spacing={2}>
-            <TextField
-              label="change Privacy"
-              name="privacy"
-              defaultValue={user.privacy}
-              onChange={handleChange}
-              margin="normal"
-              fullWidth
-            />
+            <FormControl margin="normal" fullWidth>
+              <InputLabel id="privacy-label">Change Privacy</InputLabel>
+              <Select
+                labelId="privacy-label"
+                label="Change Privacy"
+                name="privacy"
+                defaultValue={user.privacy}
+                onChange={handleChange}
+              >
+                <MenuItem value="yes">Yes</MenuItem>
+                <MenuItem value="no">No</MenuItem>
+              </Select>
+            </FormControl>
 
             <FormControl fullWidth>
               <InputLabel id="country-label">Country</InputLabel>
@@ -326,7 +332,7 @@ const ProfilePage = () => {
               </Select>
             </FormControl>
           </Stack>
-          <Stack direction="row" sx={{ mt: 2 }} spacing={2}>
+          <Stack direction="row" sx={{ mt: 5 }} spacing={2}>
             <TextField
               fullWidth
               label="old Password"
@@ -346,7 +352,7 @@ const ProfilePage = () => {
           </Stack>
           <Box
             sx={{
-              mt: 5,
+              mt: 10,
               display: "flex",
               justifyContent: "space-between",
             }}

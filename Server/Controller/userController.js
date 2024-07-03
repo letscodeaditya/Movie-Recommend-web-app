@@ -27,36 +27,37 @@ const registerUser = asyncHandler(async (req, res) => {
     !privacy ||
     !theme
   ) {
-    res.status(400);
-    throw new Error("please enter all fields");
+    return res.status(400).json({ message: "Please enter all fields" });
   }
 
-  const userExits = await User.findOne({ $or: [{ email }, { username }] });
+  try {
+    const userExits = await User.findOne({ $or: [{ email }, { username }] });
 
-  if (userExits) {
-    res.status(400);
-    throw new Error("user already exits");
-  }
+    if (userExits) {
+      return res
+        .status(400)
+        .json({ message: "Email already exists or username is already taken" });
+    }
 
-  const user = await User.create({
-    name,
-    password,
-    email,
-    gender,
-    pic,
-    username,
-    country,
-    privacy,
-    theme,
-  });
-
-  if (user) {
-    res.status(201).json({
-      message: "account created successfully",
+    const user = await User.create({
+      name,
+      password,
+      email,
+      gender,
+      pic,
+      username,
+      country,
+      privacy,
+      theme,
     });
-  } else {
-    res.status(400);
-    throw new Error("failed to create new user");
+
+    if (user) {
+      return res.status(201).json({ message: "Account created successfully" });
+    } else {
+      return res.status(400).json({ message: "Failed to create new user" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

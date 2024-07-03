@@ -29,8 +29,6 @@ const TrendingMovies = () => {
               id={data.id}
             />
           ))}
-
-        {/* {console.log(movieList)} */}
       </div>
       <Link
         to="/movies"

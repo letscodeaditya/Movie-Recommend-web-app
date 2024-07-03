@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Container, Typography, Box, Avatar, Stack } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Box,
+  Avatar,
+  Stack,
+  IconButton,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ButtonBase from "@mui/material/ButtonBase";
 
@@ -12,33 +19,33 @@ import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 
-import { FaCode } from "react-icons/fa";
-import { FaReact } from "react-icons/fa";
+import {
+  FaCode,
+  FaReact,
+  FaNodeJs,
+  FaGithubSquare,
+  FaLinkedin,
+} from "react-icons/fa";
 import { MdDesignServices } from "react-icons/md";
 import { BiLogoMongodb } from "react-icons/bi";
-import { FaNodeJs } from "react-icons/fa";
 import { SiExpress } from "react-icons/si";
-
-import IconButton from "@mui/material/IconButton";
-import { FaGithubSquare } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa6";
 
 const images = [
   {
     url: "/image/project.png",
     title: "Projects",
     width: "35%",
-    link: "https://github.com/Whyaditya",
+    link: "https://github.com/letscodeaditya?tab=repositories",
   },
   {
     url: "/image/network.jpeg",
-    title: "contact",
+    title: "Contact",
     width: "30%",
     link: "https://www.linkedin.com/in/aditya-ayush-a76a81271",
   },
   {
     url: "/image/resume.jpg",
-    title: "resume",
+    title: "Resume",
     width: "35%",
     link: "https://drive.google.com/drive/folders/158EM-HmtuhpjNCv-0B-dLjp8yibSyXy7?usp=sharing",
   },
@@ -155,30 +162,29 @@ const AboutUs = () => {
       <Box
         sx={{
           display: "flex",
-          marginTop: "20px",
-          flexDirection: "row",
+          flexDirection: { xs: "column", md: "row" },
           alignItems: "center",
+          marginTop: "20px",
         }}
       >
         <Box
           sx={{
             height: { xs: "30vh", sm: "40vh", md: "50vh" }, // Responsive height based on breakpoints
-            width: { xs: "50vw", sm: "30vw", md: "25vw" }, // Responsive width based on breakpoints
-            marginRight: "100px",
+            width: { xs: "90vw", sm: "50vw", md: "25vw" }, // Responsive width based on breakpoints
             backgroundColor: "#232526",
             border: "solid black 5px",
             borderRadius: "100px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center", // Center the Avatar vertically
+            marginBottom: { xs: "20px", md: "0" }, // Adjust margin for responsiveness
+            marginRight: { xs: "0", md: "20px" }, // Adjust margin for responsiveness
           }}
         >
           <Stack alignItems="center">
-            {" "}
-            {/* Align items center to center the Avatar */}
             <Avatar
               alt="Remy Sharp"
-              src="/image/newimage.jpeg"
+              src="/image/newimage.jpg"
               sx={{
                 width: { xs: "50px", sm: "100px", md: "150px" },
                 height: { xs: "50px", sm: "100px", md: "150px" },
@@ -188,17 +194,18 @@ const AboutUs = () => {
               sx={{ display: "flex", flexDirection: "row", marginTop: "5px" }}
             >
               <IconButton
-                aria-label="delete"
+                aria-label="github"
                 size="large"
-                color="white"
+                color="inherit"
                 onClick={() => {
-                  window.location.href = "https://github.com/Whyaditya";
+                  window.location.href =
+                    "https://github.com/letscodeaditya/Movie-Recommend-web-app";
                 }}
               >
                 <FaGithubSquare color="white" style={{ fontSize: "40px" }} />
               </IconButton>
               <IconButton
-                aria-label="delete"
+                aria-label="linkedin"
                 size="large"
                 color="primary"
                 onClick={() => {
@@ -212,13 +219,10 @@ const AboutUs = () => {
           </Stack>
         </Box>
 
-        {/* detail  */}
-
         <Box
           sx={{
-            height: { xs: "auto", sm: "90vh", md: "70vh" }, // Responsive height based on breakpoints
-            width: { xs: "90vw", sm: "80vw", md: "70vw" }, // Responsive width based on breakpoints
-            margin: "10px",
+            height: { xs: "auto", sm: "auto", md: "70vh" }, // Responsive height based on breakpoints
+            width: { xs: "90vw", sm: "90vw", md: "70vw" }, // Responsive width based on breakpoints
             backgroundColor: "#232526",
             border: "solid black 5px",
             borderRadius: "50px",
@@ -226,7 +230,7 @@ const AboutUs = () => {
             justifyContent: "center",
             alignItems: "center", // Center the content vertically
             textAlign: "center", // Center text horizontally
-            // overflow: "auto", // Allow text to scroll if it exceeds box dimensions
+            padding: "10px",
             overflow: "hidden",
           }}
         >
@@ -247,8 +251,8 @@ const AboutUs = () => {
               <strong style={{ color: "black", fontSize: "3rem" }}>"</strong>Hi,
               I'm <strong>Aditya Ayush</strong>. I'm a passionate developer with
               a keen interest in building web applications. This project is my
-              React movie recommendation web app, built using Material-UI,
-              Bootstrap, and React.
+              React movie recommendation web app, built using React,
+              Material-UI, Bootstrap, Node.JS and MongoDB .
             </Typography>
             <Typography
               variant="body1"
@@ -256,7 +260,7 @@ const AboutUs = () => {
               sx={{ color: "white", fontSize: { xs: "1rem", sm: "1.5rem" } }} // Adjust font size based on breakpoints
             >
               I have experience working with various technologies and
-              frameworks, including React, Node.js, Express, MongoDB, and more.
+              frameworks, including Spring Boot, Firebase, PHP, MYSQL, and more.
               I enjoy learning new things and constantly improving my skills.
               <strong style={{ color: "black", fontSize: "3rem" }}>"</strong>
             </Typography>
@@ -264,22 +268,19 @@ const AboutUs = () => {
         </Box>
       </Box>
 
-      {/* second phase */}
-
       <Box
         sx={{
           marginTop: "100px",
           display: "flex",
+          flexDirection: { xs: "column", md: "row" },
           justifyContent: "space-between",
         }}
       >
-        {/* skills  */}
-
         <Box
           sx={{
             marginBottom: "100px",
-            marginRight: { xs: "10px", sm: "20px", md: "100px" }, // Responsive margin based on breakpoints
-            width: { xs: "90vw", sm: "40vw", md: "20vw" }, // Responsive width based on breakpoints
+            marginRight: { xs: "0", md: "100px" }, // Responsive margin based on breakpoints
+            width: { xs: "90vw", sm: "70vw", md: "20vw" }, // Responsive width based on breakpoints
             border: "5px solid black",
             overflow: "hidden", // Allow text to scroll if it exceeds box dimensions
           }}
@@ -301,10 +302,9 @@ const AboutUs = () => {
             <ListItemButton onClick={handleClick}>
               <ListItemIcon sx={{ fontSize: "30px" }}>
                 <FaCode />
-                FrontEnd
               </ListItemIcon>
-              <ListItemText primary="" />
-              {open ? <ExpandLess /> : <ExpandMore />}
+              <ListItemText primary="FrontEnd" />
+              {openA ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={openA} timeout="auto" unmountOnExit>
               <List component="div" disablePadding sx={{ fontSize: "20px" }}>
@@ -322,7 +322,7 @@ const AboutUs = () => {
                     <MdDesignServices />
                   </ListItemIcon>
                   <ListItemText
-                    primary="Material ui + Bootstrap"
+                    primary="Material-UI + Bootstrap"
                     sx={{ color: "#3f51b5", marginLeft: "-20px" }}
                   />
                 </ListItemButton>
@@ -331,10 +331,10 @@ const AboutUs = () => {
 
             <ListItemButton onClick={handleClick2}>
               <ListItemIcon sx={{ fontSize: "30px" }}>
-                <FaCode /> BackEnd
+                <FaCode />
               </ListItemIcon>
-              <ListItemText primary="" />
-              {open ? <ExpandLess /> : <ExpandMore />}
+              <ListItemText primary="BackEnd" />
+              {openB ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={openB} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
@@ -370,13 +370,18 @@ const AboutUs = () => {
           </List>
         </Box>
 
-        {/* resume */}
-
-        <Box sx={{ height: "60vh", width: "50vw" }}>
+        <Box
+          sx={{
+            width: { xs: "100%", md: "50%" },
+            marginBottom: "50px",
+            marginRight: "120px",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
               flexWrap: "wrap",
+              justifyContent: "center",
               height: "80%",
               width: "100%",
             }}

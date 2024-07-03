@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, useParams, useNavigate } from "react-router-dom";
 import Loading from "./LoadingMovieDetails";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -23,6 +23,8 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 import ShareModal from "../features/core/ShareModal";
 import Rating from "@mui/material/Rating";
 import { MdDateRange } from "react-icons/md";
+import Modal from "@mui/material/Modal";
+import { Tooltip } from "@mui/material";
 
 const Img = styled("img")({
   margin: "auto",
@@ -43,7 +45,9 @@ const MovieDetail = () => {
   const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
   const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [loginPromptOpen, setLoginPromptOpen] = useState(false);
   const currentUrl = window.location.href;
+  const navigate = useNavigate();
 
   let detailUrl;
   let videoUrl;
@@ -131,6 +135,10 @@ const MovieDetail = () => {
   };
 
   const handleLike = async () => {
+    if (!user) {
+      setLoginPromptOpen(true);
+      return;
+    }
     const method = liked ? "DELETE" : "POST";
     try {
       const response = await fetch(
@@ -162,6 +170,10 @@ const MovieDetail = () => {
   };
 
   const handleWishlist = async () => {
+    if (!user) {
+      setLoginPromptOpen(true);
+      return;
+    }
     const method = wishlisted ? "DELETE" : "POST";
     await fetch(`${process.env.API_BASE_URL}/api/userint/wishlist`, {
       method,
@@ -184,6 +196,14 @@ const MovieDetail = () => {
 
   const handleCloseShareModal = () => {
     setShareModalOpen(false);
+  };
+
+  const handleCloseLoginPrompt = () => {
+    setLoginPromptOpen(false);
+  };
+
+  const redirectToLogin = () => {
+    setLoginPromptOpen(false);
   };
 
   const actions = [
@@ -223,21 +243,23 @@ const MovieDetail = () => {
                 borderRadius: "20px",
               }}
             >
-              <IconButton
-                sx={{
-                  position: "absolute",
-                  top: 8,
-                  right: 8,
-                }}
-                onClick={handleWishlist}
-                color="primary"
-              >
-                {wishlisted ? (
-                  <MdBookmarkAdded style={{ fontSize: "50px" }} />
-                ) : (
-                  <MdBookmarkAdd style={{ fontSize: "50px" }} />
-                )}
-              </IconButton>
+              <Tooltip title={wishlisted ? "remove" : "add"}>
+                <IconButton
+                  sx={{
+                    position: "absolute",
+                    top: 8,
+                    right: 8,
+                  }}
+                  onClick={handleWishlist}
+                  color="primary"
+                >
+                  {wishlisted ? (
+                    <MdBookmarkAdded style={{ fontSize: "50px" }} />
+                  ) : (
+                    <MdBookmarkAdd style={{ fontSize: "50px" }} />
+                  )}
+                </IconButton>
+              </Tooltip>
               <Grid container spacing={2}>
                 <Grid item sx={{ marginBottom: "20px", height: "50vh" }}>
                   <Img
@@ -394,6 +416,39 @@ const MovieDetail = () => {
           />
         </>
       )}
+
+      <Modal
+        open={loginPromptOpen}
+        onClose={handleCloseLoginPrompt}
+        aria-labelledby="login-prompt-title"
+        aria-describedby="login-prompt-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 300,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="login-prompt-title" variant="h6" component="h2">
+            Login Required
+          </Typography>
+          <Typography id="login-prompt-description" sx={{ mt: 2 }}>
+            Please log in to perform this action.
+          </Typography>
+          <Box mt={2}>
+            <Button variant="contained" onClick={redirectToLogin}>
+              close
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </>
   );
 };
