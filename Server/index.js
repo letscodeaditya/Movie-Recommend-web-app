@@ -12,7 +12,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: "https://watch-movies-tau.vercel.app/",
+  origin: "https://watch-movies-tau.vercel.app",
   credentials: true, // Allow credentials (cookies, authorization headers)
 };
 
