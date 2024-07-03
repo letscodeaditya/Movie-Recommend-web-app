@@ -23,7 +23,7 @@ const WishList = ({ userId }) => {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: `${process.env.API_KEY}`,
+      Authorization: `${import.meta.env.VITE_API_KEY}`,
     },
   };
 
@@ -59,7 +59,9 @@ const WishList = ({ userId }) => {
 
   const fetchWishlist = async () => {
     const response = await fetch(
-      `${process.env.API_BASE_URL}/api/userint/${user.userId}/wishlist?page=${page}&limit=8`,
+      `${import.meta.env.VITE_API_BASE_URL}/api/userint/${
+        user.userId
+      }/wishlist?page=${page}&limit=8`,
       {
         method: "GET",
         headers: {

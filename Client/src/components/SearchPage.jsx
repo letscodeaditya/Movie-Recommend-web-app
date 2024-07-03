@@ -15,7 +15,7 @@ const SearchPage = () => {
   const apiKey = "YOUR_API_KEY"; // Replace with your API key
   const options = {
     headers: {
-      Authorization: `${process.env.API_KEY}`,
+      Authorization: `${import.meta.env.VITE_API_KEY}`,
       "Content-Type": "application/json",
     },
   };

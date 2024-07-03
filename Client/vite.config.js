@@ -4,12 +4,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const { API_BASE_URL, API_KEY } = process.env;
-
 export default defineConfig({
   plugins: [react()],
   define: {
-    "process.env.API_BASE_URL": JSON.stringify(API_BASE_URL),
-    "process.env.API_KEY": JSON.stringify(API_KEY),
+    "process.env.VITE_API_BASE_URL": JSON.stringify(
+      process.env.VITE_API_BASE_URL
+    ),
+    "process.env.VITE_API_KEY": JSON.stringify(process.env.VITE_API_KEY),
   },
 });

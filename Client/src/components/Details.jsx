@@ -53,11 +53,14 @@ const MovieDetail = () => {
   let videoUrl;
   let creditUrl;
 
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
+
   const options = {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: `${process.env.API_KEY}`,
+      Authorization: `${apiKey}`,
     },
   };
 
@@ -111,9 +114,9 @@ const MovieDetail = () => {
   const checkUserInteraction = async () => {
     try {
       const response = await fetch(
-        `${process.env.API_BASE_URL}/api/userint/user-interaction/${
-          user.userId
-        }/${id}/${tv ? "tv" : "movie"}`,
+        `${apiUrl}/api/userint/user-interaction/${user.userId}/${id}/${
+          tv ? "tv" : "movie"
+        }`,
         {
           credentials: "include",
         }
@@ -141,21 +144,18 @@ const MovieDetail = () => {
     }
     const method = liked ? "DELETE" : "POST";
     try {
-      const response = await fetch(
-        `${process.env.API_BASE_URL}/api/userint/likes`,
-        {
-          method,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            userId: user.userId,
-            tmdbId: id,
-            type: tv ? "tv" : "movie",
-          }),
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/userint/likes`, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          userId: user.userId,
+          tmdbId: id,
+          type: tv ? "tv" : "movie",
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -175,7 +175,7 @@ const MovieDetail = () => {
       return;
     }
     const method = wishlisted ? "DELETE" : "POST";
-    await fetch(`${process.env.API_BASE_URL}/api/userint/wishlist`, {
+    await fetch(`${apiUrl}/api/userint/wishlist`, {
       method,
       headers: {
         "Content-Type": "application/json",

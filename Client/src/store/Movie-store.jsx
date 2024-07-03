@@ -45,12 +45,14 @@ const MovieStoreProvider = ({ children }) => {
     movies: [],
     tvSeries: [],
   });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   const options = {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: `${process.env.API_KEY}`,
+      Authorization: `${apiKey}`,
     },
   };
   const url = "https://api.themoviedb.org/3";
@@ -111,13 +113,10 @@ const MovieStoreProvider = ({ children }) => {
 
   const checkAuthenticated = async () => {
     try {
-      const response = await fetch(
-        `${process.env.API_BASE_URL}/api/user/check`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/user/check`, {
+        method: "GET",
+        credentials: "include",
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -139,7 +138,7 @@ const MovieStoreProvider = ({ children }) => {
         credentials: "include",
       });
 
-      await axiosInstance.post(`${process.env.API_BASE_URL}/api/user/logout`);
+      await axiosInstance.post(`${apiUrl}/api/user/logout`);
 
       localStorage.removeItem("user");
 

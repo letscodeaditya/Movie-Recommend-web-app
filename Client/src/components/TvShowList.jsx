@@ -27,7 +27,7 @@ const TvShowList = () => {
         method: "GET",
         headers: {
           accept: "application/json",
-          Authorization: `${process.env.API_KEY}`,
+          Authorization: `${import.meta.env.VITE_API_KEY}`,
         },
       }
     );
